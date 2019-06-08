@@ -2,15 +2,16 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { login, clearErrors } from '../../actions/session_actions';
 import { Input } from '../shared/form_elements';
+import './SessionForm.css';
+import { Link } from 'react-router-dom';
 
 function LoginForm({ errors, login, clearErrors }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   useEffect(() => {
-    return () => {
-      clearErrors();
-    }
+    return clearErrors;
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleSubmit = (e) => {
@@ -19,8 +20,10 @@ function LoginForm({ errors, login, clearErrors }) {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form className="session-form" onSubmit={handleSubmit}>
+      <h2>Log In</h2>
       <Input
+        autoFocus={true}
         type="text"
         value={email}
         placeholder="Email or Username"
@@ -33,6 +36,7 @@ function LoginForm({ errors, login, clearErrors }) {
         onChange={(e) => setPassword(e.target.value)}
         error={errors.password} />
       <input type="submit" value="Log In" />
+      <div>Not a member? <Link to="/signup">Sign Up</Link></div>
     </form>
   );
 }

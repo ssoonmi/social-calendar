@@ -8,7 +8,7 @@ const validateCalendarInput = require('../../validation/calendar');
 router.get('/',
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
-    Calendar.find({ user: req.user.id })
+    Calendar.find({ user: req.user.id }, { id: 1, name: 1, description: 1, date: 1, user: 1 })
       .then(calendars => res.json(calendars))
       .catch(() => 
         res.status(404).json({ 
@@ -21,7 +21,7 @@ router.get('/',
 router.get('/:id',
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
-    Calendar.findOne({ user: req.user.id, _id: req.params.id })
+    Calendar.findOne({ user: req.user.id, _id: req.params.id }, { _id: 1, name: 1, description: 1, date: 1, user: 1 })
       .then(calendar => {
         if (calendar) return res.json(calendar);
         res.status(404).json({
@@ -39,9 +39,15 @@ router.get('/:id',
 router.patch('/:id',
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
-    Calendar.findOne({ user: req.user.id, _id: req.params.id })
+    Calendar.findOne({ user: req.user.id, _id: req.params.id }, { _id: 1, name: 1, description: 1, date: 1, user: 1 })
       .then(calendar => {
         if (calendar) {
+          const { errors, isValid } = validateCalendarInput(req.body);
+
+          if (!isValid) {
+            return res.status(400).json(errors);
+          }
+          
           const { name, description } = req.body;
 
           calendar.name = name;
@@ -108,7 +114,7 @@ router.post('/',
       
           newCalendar.save()
             .then((calendar) => res.json(calendar))
-            .catch(err => console.log(err));
+            .catch(err => res.status(400).json(err));
         } else {
           return res.status(400).json({ 
             name: 'Cannot have two calendars with the same name' 

@@ -1,5 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import CalendarDashboard from '../calendars/CalendarDashboard';
+
 
 function AuthMainPage() {
   return (
@@ -7,15 +9,17 @@ function AuthMainPage() {
   );
 }
 
-function ProtectedMainPage({ currentUser }) {
+function ProtectedMainPage() {
   return (
-    <h1>Main page when logged in</h1>
+    <>
+      <CalendarDashboard />
+    </>
   );
 }
 
 function MainPage(props) {
-  if (props.loggedIn) return <ProtectedMainPage {...props} />
-  else return <AuthMainPage />
+  if (props.loggedIn) return <ProtectedMainPage {...props} />;
+  else return <AuthMainPage />;
 }
 
 const msp = state => {
@@ -25,10 +29,4 @@ const msp = state => {
   };
 };
 
-const mdp = dispatch => {
-  return {
-
-  };
-};
-
-export default connect(msp, mdp)(MainPage);
+export default connect(msp, null)(MainPage);

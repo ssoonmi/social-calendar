@@ -15,6 +15,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 if (process.env.NODE_ENV === 'production') {
+  console.log('production');
   app.use(express.static('frontend/build'));
   app.get('/', (res, req) => {
     res.sendFile(path.resolve(_dirname, 'frontend', 'build', 'index.html'));

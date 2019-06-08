@@ -3,7 +3,12 @@ function axios({ method, url, data, success, error }) {
     const request = new XMLHttpRequest();
 
     request.onload = function () {
-      const response = JSON.parse(request.response);
+      let response;
+      try {
+        response = JSON.parse(request.response);
+      } catch (error) {
+        response = request.response;
+      }
 
       if (this.status >= 200 && this.status < 300) {
         if (success) success(response);
@@ -25,8 +30,8 @@ function axios({ method, url, data, success, error }) {
     // var token = document.querySelector('meta[name="csrf-token"]').content;
     // request.setRequestHeader('X-CSRF-Token', token);
 
-    if (axios.headers.Authentication) {
-      request.setRequestHeader('Authentication', axios.headers.Authentication);
+    if (axios.headers.Authorization) {
+      request.setRequestHeader('Authorization', axios.headers.Authorization);
     }
 
     if (data instanceof FormData) {
@@ -86,6 +91,8 @@ export const setAuthToken = token => {
   }
 };
 
-axios.headers = {};
+axios.headers = {
+  Authorization: localStorage.jwtToken
+};
 
 export default axios;

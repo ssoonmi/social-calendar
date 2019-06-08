@@ -38,10 +38,9 @@ export const signup = user => dispatch => (
       type: RECEIVE_CURRENT_USER,
       user: decoded
     })
+  }, err => {
+    return dispatch(receiveErrors(err.response.data));
   })
-    .catch(err => {
-      dispatch(receiveErrors(err.response.data));
-    })
 );
 
 // Upon login, set the session token and dispatch the current user. Dispatch errors on failure.
@@ -55,12 +54,7 @@ export const login = user => dispatch => (
       type: RECEIVE_CURRENT_USER,
       user: decoded
     })
+  }, err => {
+    return dispatch(receiveErrors(err.response.data));
   })
-    .catch(err => {
-      dispatch(receiveErrors(err.response.data));
-    })
 );
-
-window.login = login;
-window.signup = signup;
-window.logout= logout;

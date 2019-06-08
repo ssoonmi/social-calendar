@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { logout } from '../../actions/session_actions';
 import { AuthComponent, ProtectedComponent } from '../../util/component_util';
 import { Link } from 'react-router-dom';
+import './NavBar.css';
+import ProfileDropdown from './ProfileDropdown';
 
 function AuthRightNav() {
   return (
@@ -18,10 +20,17 @@ function AuthRightNav() {
 }
 
 function ProtectedRightNav({ logout, currentUser }) {
+  const [showDropdown, setShowDropdown] = useState(false);
+
   return (
     <>
-      <li>
-        <div>Hello {currentUser.username}!</div>
+      <li className="profile-button">
+        <div 
+          className="default-profile"
+          onClick={() => setShowDropdown(!showDropdown)}>
+          <i className="fas fa-user" />
+        </div>
+        {showDropdown && <ProfileDropdown close={() => setShowDropdown(!showDropdown)} />}
       </li>
       <li>
         <div onClick={() => logout()}>Log Out</div>
@@ -33,6 +42,7 @@ function ProtectedRightNav({ logout, currentUser }) {
 function NavBar(props) {
   return (
     <nav className="main-nav">
+      <h1><Link to="/" >Social Calendar</Link></h1>
       <ul className="right-nav">
         <AuthComponent {...props} component={AuthRightNav} />
         <ProtectedComponent {...props} component={ProtectedRightNav} />

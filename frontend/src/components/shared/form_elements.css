@@ -1,0 +1,10 @@
+label {
+  position: relative;
+}
+
+label .chars-left {
+  position: absolute;
+  right: 4px;
+  bottom: 4px;
+  font-size: 1.2rem;
+}

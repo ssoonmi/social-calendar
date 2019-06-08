@@ -1,0 +1,56 @@
+.session-form {
+  margin: 0 auto;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  padding-top: 16px;
+  justify-content: center;
+  align-items: center;
+}
+
+.session-form h2 {
+  color: rgb(200, 90, 90);
+  font-size: 2.0rem;
+  margin-bottom: 8px;
+  width: fit-content;
+}
+
+.session-form label {
+  margin-bottom: 8px;
+  width: 100%;
+}
+
+.session-form input[type=text], .session-form input[type=password] {
+  padding: 8px;
+  background-color: white;
+  color: rgb(200, 90, 90);
+  width: 100%;
+  border: 1px solid rgb(200, 90, 90);
+  border-radius: 4px;
+}
+
+.session-form label.error span {
+  color: rgb(200, 90, 90);
+}
+
+.session-form label.error > input {
+  border: 1px solid red;
+}
+
+.session-form input[type=submit] {
+  padding: 8px;
+  font-size: 1.6rem;
+  background-color: rgb(200, 90, 90);
+  color: white;
+  border-radius: 8px;
+  width: 100%;
+  margin-bottom: 8px;
+}
+
+.session-form > div a {
+  color: rgb(200, 90, 90);
+}
+
+.session-form > div a:hover {
+  text-decoration: underline;
+}
